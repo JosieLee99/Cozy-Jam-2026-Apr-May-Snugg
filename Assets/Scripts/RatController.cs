@@ -13,10 +13,10 @@ public class RatController : MonoBehaviour
 [SerializeField] private ComfortLevelFunction comfortLevelFunction; // Reference to the ComfortLevelFunction script to modify the cat's comfort level
 
 
-private Vector2 target; // The cat's position
+private Vector3 target; // The cat's position
     private readonly float ratSpeed = 2f; // The speed the rat moves towards the cat
     private readonly float ratRunawaySpeed = 6f; // The speed the rat runs away from the cat
-    private RatState currentstate = false; // Says if the rat is running away from the cat
+    private RatState currentstate; // Says if the rat is running away from the cat
 
     void Start()
     {
@@ -44,23 +44,23 @@ private Vector2 target; // The cat's position
 
     void MoveTowardsTarget()
     {
-        Vector2 direction = (target - (Vector2)transform.position).normalized; // The direction the rat moves towards the cat
-        transform.position += (Vector2)(direction * ratSpeed * Time.deltaTime); // Move the big bad rat towards the innocent cat (WHAT A MONSTER!)
+        Vector3 direction = (target - transform.position).normalized; // The direction the rat moves towards the cat
+        transform.localPosition += direction * ratSpeed * Time.deltaTime; // Move the big bad rat towards the innocent cat (WHAT A MONSTER!)
     }
 
     void MoveAwayFromTarget()
     {
-        Vector2 direction = ((Vector2)transform.position - target).normalized; // The direction the rat runs from the cat
-        transform.position += (Vector2)(direction * ratRunawaySpeed * Time.deltaTime); // Move the big bad rat away from the innocent cat (YEA, AND DON'T COME BACK!)
+        Vector3 direction = (transform.position - target).normalized; // The direction the rat runs from the cat
+        transform.localPosition += direction * ratRunawaySpeed * Time.deltaTime; // Move the big bad rat away from the innocent cat (YEA, AND DON'T COME BACK!)
     }
 
     void ReachedCat()
     {
 
-      if (Vector2.Distance(transform.position, target) < 0.2f && !isRunningAway)
+      if (Vector3.Distance(transform.position, target) < 0.2f && currentstate == RatState.Approaching)
         {
             comfortLevelFunction.GetComfy(-10f); // The rat made the cat uncomfortable T-T
-            isRunningAway = true;
+            currentstate = RatState.RunAway;
         }
         }
 }

@@ -9,7 +9,7 @@ public class ComfortLevelFunction : MonoBehaviour
 
    
 
-    public void getComfy(float comfortIncrease)
+    public void GetComfy(float comfortIncrease)
     {
         comfortLevel += comfortIncrease;
 
@@ -21,9 +21,9 @@ public class ComfortLevelFunction : MonoBehaviour
 
     }
 
-    public void getUncomfy(float decreaseSpeed)
+    public void GetUncomfy(float decreaseSpeed)
     {
-        comfortLevel -= Time.deltaTime * decreaseSpeed;;
+        comfortLevel -= Time.deltaTime * decreaseSpeed;
         if (comfortLevel < 0f)
         {
             comfortLevel = 0f;
@@ -40,7 +40,7 @@ public class ComfortLevelFunction : MonoBehaviour
     {
         if (comfortLevel > 0f)
         {
-            getUncomfy(2f); // The rate at which the cat gets uncomfy (he's getting more and more uncomfy T-T)
+            GetUncomfy(2f); // The rate at which the cat gets uncomfy (he's getting more and more uncomfy T-T)
         }
     }
 
