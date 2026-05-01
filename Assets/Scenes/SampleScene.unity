@@ -897,7 +897,7 @@ SpriteRenderer:
   m_SortingLayer: -1
   m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 70d7cc7644e5a284a8fb11874c2b7769, type: 3}
+  m_Sprite: {fileID: 8890824783460625436, guid: fa0da501ce12d4146b7218c8f444ebc7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2577,8 +2577,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -492.55, y: -266.89}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -475.45, y: -322.1}
+  m_SizeDelta: {x: 234.21, y: 52.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1949088463
 MonoBehaviour:
@@ -2602,15 +2602,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kitty is vulnerable
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 41f3c9711c4c2e04289b2dab208341c7, type: 2}
+  m_sharedMaterial: {fileID: 6435754472833915423, guid: 41f3c9711c4c2e04289b2dab208341c7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4290953941
+  m_fontColor: {r: 0.83396226, g: 0.7600071, b: 0.7600071, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2666,7 +2666,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -97.71927, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
