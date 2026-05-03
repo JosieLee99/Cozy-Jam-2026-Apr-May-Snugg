@@ -16,17 +16,19 @@ public class RatController : MonoBehaviour
 private Vector3 target; // The cat's position
     private readonly float ratSpeed = 2f; // The speed the rat moves towards the cat
     private readonly float ratRunawaySpeed = 6f; // The speed the rat runs away from the cat
-    private RatState currentstate; // Says if the rat is running away from the cat
+    public RatState currentState; // Says if the rat is running away from the cat
 
     void Start()
     {
 
-       currentstate = RatState.Approaching; // The rat starts by approaching the cat
+        comfortLevelFunction = GameObject.FindWithTag("MainCamera").GetComponent<ComfortLevelFunction>();
+
+        currentState = RatState.Approaching; // The rat starts by approaching the cat
     }
 
     void Update()
     {
-       switch (currentstate)
+       switch (currentState)
         {
             case RatState.Approaching:
                 MoveTowardsTarget();
@@ -40,6 +42,10 @@ private Vector3 target; // The cat's position
                 Destroy(gameObject);
                 break;
         }
+
+        if(transform.position.x > 15 || transform.position.x < -15 || transform.position.y > 15 || transform.position.y < -15)
+            ObjectPoolManager.ReturnToObjectPool(gameObject);
+
     }
 
     void MoveTowardsTarget()
@@ -57,10 +63,27 @@ private Vector3 target; // The cat's position
     void ReachedCat()
     {
 
-      if (Vector3.Distance(transform.position, target) < 0.2f && currentstate == RatState.Approaching)
+        if (Vector3.Distance(transform.position, target) < 0.2f && currentState == RatState.Approaching)
         {
-            comfortLevelFunction.GetComfy(-10f); // The rat made the cat uncomfortable T-T
-            currentstate = RatState.RunAway;
+            comfortLevelFunction.GetComfy(-22.5f); // The rat made the cat uncomfortable T-T
+            //GameObject.FindWithTag("MainCamera").GetComponent<PlayerController>().Shake();
+            currentState = RatState.RunAway;
         }
+
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+        if(collision.gameObject.tag == "Player")
+        {
+
+            //comfortLevelFunction.GetComfy(-10f); // The rat made the cat uncomfortable T-T
+            currentState = RatState.RunAway;
+
         }
+
+    }
+
 }

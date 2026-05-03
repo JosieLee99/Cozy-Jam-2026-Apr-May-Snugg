@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using TMPro;
@@ -8,6 +9,9 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
+    [SerializeField] private ComfortLevelFunction comfortLevelFunction;
+
+
     [SerializeField] private int currentAnchor = 0;
     [SerializeField] private int selectedAchor = 0;
     [SerializeField] private int iterator = 0;
@@ -16,10 +20,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject yarn;
     [SerializeField] private GameObject canvas;
-    [SerializeField] private GameObject pillow;
+    [SerializeField] public GameObject pillow1;
+    [SerializeField] public GameObject pillow2;
+    [SerializeField] public GameObject pillow3;
+    [SerializeField] public GameObject cat;
     [SerializeField] private GameObject[] anchors = new GameObject[8];
     [SerializeField] private Animator yarnAnimator;
-    [SerializeField] private TextMeshProUGUI testText;
+    [SerializeField] public TextMeshProUGUI testText;
 
 
     [SerializeField] private Sprite unclippedClipSprite;
@@ -41,18 +48,18 @@ public class PlayerController : MonoBehaviour
     private void CheckForInput()
     {
 
-        if(pillow.activeInHierarchy)
-        {
-
-            testText.text = "Kitty is Comfy";
-
-        }
-        else
-        {
-
-            testText.text = "Kitty is vulnerable";
-
-        }
+        //if(pillow1.activeInHierarchy)
+        //{
+        //
+        //    testText.text = "Kitty is Comfy: " + comfortLevelFunction.comfortLevel;
+        //
+        //}
+        //else
+        //{
+        //
+        //    testText.text = "Fin.";
+        //
+        //}
 
 
 
@@ -148,13 +155,88 @@ public class PlayerController : MonoBehaviour
                     foreach (GameObject anchor in anchors)
                     {
 
-                        anchor.GetComponent<SpriteRenderer>().sprite = unclippedClipSprite;
+                        anchor.GetComponent<Animator>().SetBool("isClipped", false);
 
                     }
 
                 }
             }
         
+        }
+
+        if (comfortLevelFunction.comfortLevel == 0)
+        {
+
+            pillow1.SetActive(false);
+            pillow2.SetActive(false);
+            pillow3.SetActive(false);
+
+        }
+        else if (comfortLevelFunction.comfortLevel <= 33)
+        {
+
+            pillow1.SetActive(true);
+            pillow2.SetActive(false);
+            pillow3.SetActive(false);
+
+            if (comfortLevelFunction.comfortLevel < 20)
+            {
+
+                pillow1.GetComponent<Animator>().SetBool("isFlashing", true);
+
+            }
+            else
+            {
+
+                pillow1.GetComponent<Animator>().SetBool("isFlashing", false);
+
+            }
+
+        }
+        else if (comfortLevelFunction.comfortLevel > 33 && comfortLevelFunction.comfortLevel <= 66)
+        {
+
+            pillow1.SetActive(true);
+            pillow2.SetActive(true);
+            pillow3.SetActive(false);
+
+            if (comfortLevelFunction.comfortLevel < 50)
+            {
+
+                pillow2.GetComponent<Animator>().SetBool("isFlashing", true);
+
+            }
+            else
+            {
+
+                pillow2.GetComponent<Animator>().SetBool("isFlashing", false);
+
+            }
+
+        }
+        else if (comfortLevelFunction.comfortLevel > 66)
+        {
+
+            pillow1.SetActive(true);
+            pillow2.SetActive(true);
+            pillow3.SetActive(true);
+
+            if (comfortLevelFunction.comfortLevel < 80)
+            {
+
+                pillow3.GetComponent<Animator>().SetBool("isFlashing", true);
+
+            }
+            else
+            {
+
+                pillow3.GetComponent<Animator>().SetBool("isFlashing", false);
+
+            }
+
+            currentAnchor = 0;
+
+
         }
 
     }
@@ -164,28 +246,28 @@ public class PlayerController : MonoBehaviour
 
         if (currentAnchor != i)
         {
-             
+
             yarnAnimator.SetInteger("currentAnchor", i);
-            
+
 
             if (!usedIterators.Contains(currentAnchor))
             {
 
                 usedIterators.Add(currentAnchor);
-                anchors[currentAnchor].GetComponent<SpriteRenderer>().sprite = clippedClipSprite;
+                anchors[currentAnchor].GetComponent<Animator>().SetBool("isClipped", true);
                 iterator++;
 
             }
-            else
+            else if(usedIterators.Contains(currentAnchor))
             {
 
-                usedIterators.Remove(currentAnchor);
-                anchors[currentAnchor].GetComponent<SpriteRenderer>().sprite = unclippedClipSprite;
+                //usedIterators.Remove(currentAnchor);
+                anchors[currentAnchor].GetComponent<Animator>().SetBool("isClipped", false);
 
             }
 
 
-            if (usedIterators.Count >= 7)
+            if (usedIterators.Count >= 6 && comfortLevelFunction.comfortLevel > 0)
             {
 
                 iterator = 0;
@@ -196,21 +278,121 @@ public class PlayerController : MonoBehaviour
                 foreach (GameObject anchor in anchors)
                 {
 
-                    anchor.GetComponent<SpriteRenderer>().sprite = unclippedClipSprite;
+                    anchor.GetComponent<Animator>().SetBool("isClipped", false);
 
                 }
 
+                comfortLevelFunction.GetComfy(33f);
 
-                pillow.SetActive(true);
-                currentAnchor = 0;
 
+                //if (comfortLevelFunction.comfortLevel == 0)
+                //{
+                //
+                //    pillow1.SetActive(false);
+                //    pillow2.SetActive(false);
+                //    pillow3.SetActive(false);
+                //
+                //}
+                //else if (comfortLevelFunction.comfortLevel <= 33)
+                //{
+                //
+                //    pillow1.SetActive(true);
+                //    pillow2.SetActive(false);
+                //    pillow3.SetActive(false);
+                //
+                //    if (comfortLevelFunction.comfortLevel < 20)
+                //    {
+                //
+                //        pillow1.GetComponent<Animator>().SetBool("isFlashing", true);
+                //
+                //    }
+                //    else
+                //    {
+                //
+                //        pillow1.GetComponent<Animator>().SetBool("isFlashing", false);
+                //
+                //    }
+                //
+                //}
+                //else if (comfortLevelFunction.comfortLevel > 33 && comfortLevelFunction.comfortLevel <= 66)
+                //{
+                //
+                //    pillow1.SetActive(true);
+                //    pillow2.SetActive(true);
+                //    pillow3.SetActive(false);
+                //
+                //    if (comfortLevelFunction.comfortLevel < 50)
+                //    {
+                //
+                //        pillow2.GetComponent<Animator>().SetBool("isFlashing", true);
+                //
+                //    }
+                //    else
+                //    {
+                //
+                //        pillow2.GetComponent<Animator>().SetBool("isFlashing", false);
+                //
+                //    }
+                //
+                //}
+                //else if (comfortLevelFunction.comfortLevel > 66)
+                //{
+                //
+                //    pillow1.SetActive(true);
+                //    pillow2.SetActive(true);
+                //    pillow3.SetActive(true);
+                //
+                //   if (comfortLevelFunction.comfortLevel < 80)
+                //   {
+                //   
+                //       pillow3.GetComponent<Animator>().SetBool("isFlashing", true);
+                //   
+                //   }
+                //   else
+                //   {
+                //   
+                //       pillow3.GetComponent<Animator>().SetBool("isFlashing", false);
+                //   
+                //   }
+                //
+                //    currentAnchor = 0;
+                //
+                //
+                //}
 
             }
 
             currentAnchor = i;
-        
+
         }
 
     }
+
+    //public void Shake()
+    //{
+//
+    //    StartCoroutine(ShakeObjectOnce());
+//
+    //}
+
+    //public IEnumerator ShakeObjectOnce()
+    //{
+    //
+    //    int j = 0;
+    //
+    //    Vector3 startingPosition = cat.transform.localPosition;
+    //
+    //    float x = UnityEngine.Random.Range(0f, 0.1f);
+    //    float y = UnityEngine.Random.Range(0f, 0.1f);
+    //
+    //    gameObject.transform.localPosition = new Vector3(startingPosition.x + x, startingPosition.y + y, gameObject.transform.localPosition.z);
+    //
+    //    j++;
+    //
+    //    yield return new WaitForSeconds(0.1f);
+    //
+    //    gameObject.transform.position = Vector3.zero;
+    //
+    //}
 
 }
