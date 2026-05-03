@@ -5,6 +5,7 @@ using UnityEngine;
 public class RatSpawn : MonoBehaviour
 {
 
+    [SerializeField] private ManageMusic manageMusic;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private ComfortLevelFunction comfortLevelFunction;
 
@@ -154,14 +155,14 @@ public class RatSpawn : MonoBehaviour
                 {
 
                     randDirection = Random.Range(0, 8);
-                    randTimer = Random.Range(0.5f, 2f);
+                    randTimer = Random.Range(0.1f, 2f);
 
                 }
                 else if (currentEnemySpawnSpeed == 2)
                 {
 
                     randDirection = Random.Range(0, 8);
-                    randTimer = Random.Range(0.25f, 1f);
+                    randTimer = Random.Range(0.5f, 1f);
 
                 }
                 else if (currentEnemySpawnSpeed == 3)
@@ -191,12 +192,15 @@ public class RatSpawn : MonoBehaviour
         yield return new WaitForSeconds(10);
         shouldGiveBreak = true;
         currentEnemySpawnSpeed++;
+        manageMusic.currentEnemySpawnSpeed++;
         yield return new WaitForSeconds(10);
         shouldGiveBreak = true;
         currentEnemySpawnSpeed++;
+        manageMusic.currentEnemySpawnSpeed++;
         yield return new WaitForSeconds(10);
         shouldGiveBreak = true;
         currentEnemySpawnSpeed++;
+        manageMusic.currentEnemySpawnSpeed++;
         yield return new WaitForSeconds(10);
         shouldGiveBreak = true;
         yield return new WaitForSeconds(10);

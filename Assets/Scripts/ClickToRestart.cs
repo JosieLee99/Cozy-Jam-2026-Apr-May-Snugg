@@ -8,7 +8,7 @@ public class ClickToRestart : MonoBehaviour
     void Update()
     {
     
-        if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.JoystickButton0))
+        if(Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton0))
         {
 
             SceneManager.LoadScene(0);

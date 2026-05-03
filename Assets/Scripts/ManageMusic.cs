@@ -49,6 +49,8 @@ public class ManageMusic : MonoBehaviour
 
                 currentFXObject = Instantiate(musicFXObject, spawnTransform.position, Quaternion.identity);
 
+                FadeMusicIn(currentFXObject);
+
                 //fadeCoroutine = StartCoroutine(FadeMusicIn(currentFXObject));
 
                 currentFXObject.clip = currentMusic;
@@ -61,11 +63,15 @@ public class ManageMusic : MonoBehaviour
 
                 yield return new WaitForSeconds(10f);
 
+                StartCoroutine(FadeMusicOut(currentFXObject));
+                currentEnemySpawnSpeed++;
+                StartCoroutine(PlayMusic(spawnTransform, 1f));
+
+
                 yield return new WaitUntil(() => currentFXObject == null || currentEnemySpawnSpeed != targetEnemySpawnSpeed);
 
 
                 Destroy(currentFXObject.gameObject);
-                currentEnemySpawnSpeed++;
 
                 currentFXObject = null;
 
